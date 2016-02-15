@@ -2,7 +2,7 @@ package io.kodokojo.commons.utils;
 
 /*
  * #%L
- * commons-image-manager
+ * docker-commons-tests
  * %%
  * Copyright (C) 2016 Kodo-kojo
  * %%

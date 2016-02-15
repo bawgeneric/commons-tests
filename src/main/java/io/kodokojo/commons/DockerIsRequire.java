@@ -2,7 +2,7 @@ package io.kodokojo.commons;
 
 /*
  * #%L
- * commons-image-manager
+ * commons-tests
  * %%
  * Copyright (C) 2016 Kodo-kojo
  * %%

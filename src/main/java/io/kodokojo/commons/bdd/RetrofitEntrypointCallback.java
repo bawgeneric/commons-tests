@@ -2,7 +2,7 @@ package io.kodokojo.commons.bdd;
 
 /*
  * #%L
- * docker-commons
+ * commons-tests
  * %%
  * Copyright (C) 2016 Kodo-kojo
  * %%

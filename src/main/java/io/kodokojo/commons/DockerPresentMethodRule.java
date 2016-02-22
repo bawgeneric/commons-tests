@@ -51,4 +51,8 @@ public class DockerPresentMethodRule implements MethodRule {
             }
         };
     }
+
+    public DockerTestSupport getDockerTestSupport() {
+        return dockerTestSupport;
+    }
 }

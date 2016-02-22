@@ -31,6 +31,9 @@ import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.command.PullImageResultCallback;
 import org.apache.commons.lang.StringUtils;
+import org.junit.rules.MethodRule;
+import org.junit.runners.model.FrameworkMethod;
+import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -160,6 +163,5 @@ public class DockerTestSupport {
     public String getServerIp() {
         return remoteDaemonDockerIp;
     }
-
 
 }

@@ -30,7 +30,17 @@ import org.junit.runners.model.Statement;
 
 public class DockerPresentMethodRule implements MethodRule {
 
+    private final boolean stopContainers;
+
     private final DockerTestSupport dockerTestSupport = new DockerTestSupport();
+
+    public DockerPresentMethodRule(boolean stopContainers) {
+        this.stopContainers = stopContainers;
+    }
+
+    public DockerPresentMethodRule() {
+        this(true);
+    }
 
     @Override
     public Statement apply(Statement base, FrameworkMethod method, Object target) {
@@ -42,13 +52,19 @@ public class DockerPresentMethodRule implements MethodRule {
             @Override
             public void evaluate() throws Throwable {
                 Assume.assumeTrue("Docker client isn't available", DockerPresentMethodRule.this.dockerTestSupport.isDockerIsPresent());
-                dockerTestSupport.stopAndRemoveContainer();
+                if (stopContainers) {
+                    dockerTestSupport.stopAndRemoveContainer();
+                }
                 try {
                     base.evaluate();
                 } finally {
-                    dockerTestSupport.stopAndRemoveContainer();
+                    if (stopContainers) {
+                        dockerTestSupport.stopAndRemoveContainer();
+                    }
                 }
+
             }
+
         };
     }
 

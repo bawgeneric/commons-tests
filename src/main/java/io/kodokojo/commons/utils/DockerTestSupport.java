@@ -23,6 +23,7 @@ package io.kodokojo.commons.utils;
  */
 
 import com.github.dockerjava.api.DockerClient;
+import com.github.dockerjava.api.NotModifiedException;
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.Ports;
@@ -128,15 +129,26 @@ public class DockerTestSupport {
         if (remove) {
             containerToClean.forEach(id -> {
                 if (remove) {
-                    dockerClient.stopContainerCmd(id).exec();
-                    dockerClient.removeContainerCmd(id).exec();
-                    LOGGER.debug("Stopped and removed container id {}", id);
+                    InspectContainerResponse containerResponse = dockerClient.inspectContainerCmd(id).exec();
+                    try {
+                        dockerClient.stopContainerCmd(id).exec();
+                        //dockerClient.killContainerCmd(id).exec();
+                        dockerClient.removeContainerCmd(id).exec();
+
+                        LOGGER.debug("Stopped and removed container id: {}", id);
+                    } catch (NotModifiedException e) {
+                        LOGGER.error(e.getMessage(),e);
+                    }
                 } else {
                     LOGGER.warn("You ask us to not stop and remove containers. Ignore container id {}", id);
                 }
             });
             containerToClean.clear();
         }
+    }
+
+    public void reset() {
+        containerToClean.clear();
     }
 
     public DockerClient getDockerClient() {

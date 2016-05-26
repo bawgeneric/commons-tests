@@ -59,7 +59,7 @@ public class DockerTestSupport {
 
     public DockerTestSupport(DockerClientConfig config) {
         dockerClient = DockerClientBuilder.getInstance(config).build();
-        remoteDaemonDockerIp = config.getUri() != null ? config.getUri().getHost() : "127.0.0.1";
+        remoteDaemonDockerIp = config.getUri() != null  && config.getUri().getScheme().equals("tcp")? config.getUri().getHost() : "127.0.0.1";
         containerToClean = new ArrayList<>();
         dockerIsPresent = isDockerWorking();
     }
